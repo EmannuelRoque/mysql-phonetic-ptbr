@@ -2,6 +2,8 @@
 
 Biblioteca open source de funções SQL puras para MySQL e Percona Server 5.7+ com foco em normalização textual e geração de chave fonética auxiliar para português brasileiro.
 
+> Status: projeto inicial em fase alpha. A API, as regras de normalização e a semântica da chave fonética ainda podem evoluir nas próximas versões.
+
 ## Problema
 
 Cadastros brasileiros costumam chegar com variações de acento, pontuação, partículas, abreviações e grafias diferentes para o mesmo valor lógico. Isso afeta matching de cidades, pessoas e logradouros.
@@ -180,3 +182,22 @@ Isso evita depender de recursos avançados do banco e costuma performar melhor e
 ## Estado atual
 
 Esta primeira etapa prioriza estrutura, documentação e implementações iniciais simples, auditáveis e testáveis. A regra fonética ainda é propositalmente conservadora.
+
+## Ferramentas de desenvolvimento
+
+O projeto pode ser mantido com ferramentas abertas como VSCodium e OpenCode.
+
+Pesquisa, documentação e implementação podem usar apoio de LLMs, mas toda regra do projeto deve ser revisada por humano, testada e documentada antes de entrar no repositório.
+
+## Manutenção
+
+Projeto coordenado por [Emannuel Roque](https://github.com/EmannuelRoque).
+
+- GitHub: [@EmannuelRoque](https://github.com/EmannuelRoque)
+- LinkedIn: [emannuelroque](https://www.linkedin.com/in/emannuelroque/)
+
+## Contato e avisos
+
+Se você identificar qualquer ponto relacionado a licença, proveniência de algoritmo, questão jurídica, erro funcional, regressão, colaboração técnica ou sugestão de melhoria, entre em contato ou abra uma issue no repositório.
+
+Especialmente em temas de licença e proveniência, a preferência do projeto é corrigir rápido, documentar a origem das regras e ajustar qualquer trecho necessário com transparência.

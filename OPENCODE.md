@@ -12,3 +12,5 @@ A função fonética é chave auxiliar, não decisão final de matching.
 Em produção, recomendar coluna materializada e índice.
 Permitir apenas reutilização de funções-base: `fn_br_norm_texto()` pode chamar `fn_br_remove_acentos()`, `fn_br_norm_cidade()` pode chamar `fn_br_norm_texto()`, `fn_br_fonetica_ptbr()` pode chamar `fn_br_norm_texto()`.
 `fn_br_fonetica_ptbr()` não deve chamar `fn_br_norm_cidade()`.
+Ferramentas assistidas por IA podem apoiar pesquisa, documentação e implementação.
+Nenhuma saída de IA deve ser aceita sem revisão humana, teste de regressão e verificação de licença quando houver referência externa.
