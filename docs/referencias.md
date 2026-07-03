@@ -9,5 +9,5 @@ Referências a consolidar ao longo do projeto:
 
 Referências internas do projeto:
 
-- `docs/2026-07-02-pesquisa-algoritmos-foneticos-pt-br.md`
+- `research/pesquisa-algoritmos-foneticos-ptbr-ecossistema-licencas-e-arquitetura.md`
 - `docs/especificacao-fonetica.md`

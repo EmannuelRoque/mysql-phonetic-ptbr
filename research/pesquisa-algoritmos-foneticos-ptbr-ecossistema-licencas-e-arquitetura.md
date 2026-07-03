@@ -1,4 +1,4 @@
-# Relatório analítico sobre algoritmos fonéticos adaptados ao português brasileiro
+# Pesquisa sobre algoritmos fonéticos para português brasileiro: ecossistema, licenças e arquitetura
 
 ## Resumo executivo
 
