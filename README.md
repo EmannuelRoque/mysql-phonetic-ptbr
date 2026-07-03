@@ -41,6 +41,25 @@ As quatro funcoes principais previstas sao:
 
 A funcao fonetica deve ser tratada como chave auxiliar pragmatica para reduzir candidatos. Ela nao deve ser usada como decisao final de matching.
 
+## Dependencias entre funcoes
+
+As funcoes devem ser usaveis de forma independente, mas podem reutilizar funcoes-base internamente.
+
+Dependencias permitidas:
+
+- `fn_br_norm_texto()` pode chamar `fn_br_remove_acentos()`.
+- `fn_br_norm_cidade()` pode chamar `fn_br_norm_texto()`.
+- `fn_br_fonetica_ptbr()` pode chamar `fn_br_norm_texto()`.
+
+Dependencia proibida:
+
+- `fn_br_fonetica_ptbr()` nao deve chamar `fn_br_norm_cidade()`.
+
+Motivo:
+
+- `fn_br_norm_cidade()` contem heuristicas especificas de municipio.
+- `fn_br_fonetica_ptbr()` deve continuar generica para cidade, rua, pessoa e razao social.
+
 ## Regras tecnicas
 
 - Compatibilidade com MySQL/Percona 5.7+.
@@ -72,9 +91,12 @@ SOURCE tests/02_test_norm_texto.sql;
 SOURCE tests/03_test_norm_cidade.sql;
 SOURCE tests/04_test_fonetica_ptbr.sql;
 SOURCE tests/05_regressao_santana_livramento.sql;
+SOURCE tests/06_test_fonetica_corpus_pesquisa.sql;
 ```
 
 Os testes atuais sao SQL simples, voltados a validacao manual e regressao inicial.
+
+Os testes de fonetica incluem tanto verificacoes do comportamento atual quanto casos marcados como `PENDENTE_EVOLUCAO`, que funcionam como corpus versionado para a evolucao da regra fonetica.
 
 ## Pipeline recomendado
 
@@ -122,6 +144,38 @@ Isso evita depender de recursos avancados do banco e costuma performar melhor em
 - `Pontes e Lacerda -> PONTES E LACERDA`
 - `Passa e Fica -> PASSA E FICA`
 - `Lagoa dos Patos -> LAGOA PATOS`
+
+## Roadmap
+
+### v0.1
+
+- `fn_br_remove_acentos`
+- `fn_br_norm_texto`
+- `fn_br_norm_cidade`
+- `fn_br_fonetica_ptbr`
+
+### v0.2
+
+- `fn_br_collapse_spaces`
+- `fn_br_remove_pontuacao`
+- `fn_br_only_digits`
+- `fn_br_only_letters`
+- `fn_br_primeiro_token`
+- `fn_br_ultimo_token`
+
+### v0.3
+
+- `fn_br_norm_logradouro`
+- `fn_br_norm_bairro`
+
+### v0.4
+
+- `fn_br_norm_nome_pessoa_strict`
+- `fn_br_norm_nome_pessoa_loose`
+
+### v0.5
+
+- `fn_br_norm_razao_social`
 
 ## Estado atual
 

@@ -11,6 +11,7 @@ BEGIN
     RETURN NULL;
   END IF;
 
+  -- A fonetica depende apenas da normalizacao generica, nunca da normalizacao especifica de cidade.
   SET v_txt = fn_br_norm_texto(p_txt);
 
   SET v_txt = REPLACE(v_txt, 'PH', 'F');

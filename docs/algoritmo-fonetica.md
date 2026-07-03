@@ -2,6 +2,13 @@
 
 A funcao `fn_br_fonetica_ptbr` deve ser entendida como chave auxiliar, nao como algoritmo canonico oficial.
 
+Restricao de arquitetura:
+
+- `fn_br_fonetica_ptbr()` pode reutilizar `fn_br_norm_texto()`.
+- `fn_br_fonetica_ptbr()` nao deve depender de `fn_br_norm_cidade()`.
+
+Motivo: a fonetica precisa permanecer generica para cidade, rua, pessoa e razao social, sem herdar heuristicas municipais.
+
 Objetivo inicial:
 
 - reduzir variacao grafica obvia;
@@ -16,3 +23,5 @@ Primeiras ideias documentadas para evolucao:
 - avaliar tratamento especifico para `NH`, `LH`, `CH`, `SS`, `SC`, `XC`, `GE`, `GI`.
 
 O stub atual e conservador e serve apenas como base instalavel e testavel.
+
+Veja tambem `docs/especificacao-fonetica.md` para o contrato funcional e o corpus-alvo de evolucao.
