@@ -1,8 +1,8 @@
-# Limitacoes
+# Limitações
 
-Limitacoes conhecidas nesta etapa:
+Limitações conhecidas nesta etapa:
 
-- heuristicas ainda incompletas para nomes compostos;
-- fonetica ainda inicial, nao pronta para alto recall sem avaliacao de dominio;
+- heurísticas ainda incompletas para nomes compostos;
+- fonética ainda inicial, não pronta para alto recall sem avaliação de domínio;
 - cobertura ainda focada em cidades brasileiras;
-- funcoes com `VARCHAR(255)` por simplicidade inicial do MVP.
+- funções com `VARCHAR(255)` por simplicidade inicial do MVP.

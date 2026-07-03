@@ -1,16 +1,16 @@
-# Especificacao Fonetica
+# Especificação Fonética
 
 Este documento define o contrato funcional de `fn_br_fonetica_ptbr()` dentro do escopo deste projeto.
 
 ## Objetivo
 
-`fn_br_fonetica_ptbr()` gera uma chave fonetica auxiliar pragmatica para portugues brasileiro, adequada para reduzir candidatos em processos de matching.
+`fn_br_fonetica_ptbr()` gera uma chave fonética auxiliar pragmática para português brasileiro, adequada para reduzir candidatos em processos de matching.
 
-Ela nao e:
+Ela não é:
 
-- implementacao oficial perfeita de Metaphone-PTBR;
+- implementação oficial perfeita de Metaphone-PTBR;
 - decisora final de identidade;
-- substituta de revisao contextual, UF, ranking textual ou regras de negocio.
+- substituta de revisão contextual, UF, ranking textual ou regras de negócio.
 
 ## Escopo de compatibilidade
 
@@ -19,25 +19,25 @@ Ela nao e:
 - Percona Server 5.7+
 - Percona Server 8+
 
-Restricoes:
+Restrições:
 
 - SQL puro;
 - sem `REGEXP_REPLACE`;
 - sem UDF nativa como requisito;
 - sem recursos exclusivos do MySQL 8;
-- funcao `DETERMINISTIC` e `NO SQL` quando aplicavel.
+- função `DETERMINISTIC` e `NO SQL` quando aplicável.
 
-## Dependencias permitidas
+## Dependências permitidas
 
 - `fn_br_fonetica_ptbr()` pode chamar `fn_br_norm_texto()`.
 
-Dependencias proibidas:
+Dependências proibidas:
 
-- `fn_br_fonetica_ptbr()` nao deve chamar `fn_br_norm_cidade()`.
+- `fn_br_fonetica_ptbr()` não deve chamar `fn_br_norm_cidade()`.
 
 Motivo:
 
-- a fonetica precisa permanecer generica para cidade, rua, pessoa e razao social;
+- a fonética precisa permanecer genérica para cidade, rua, pessoa e razão social;
 - heuristicas municipais devem ficar isoladas em `fn_br_norm_cidade()`.
 
 ## Papel no pipeline
@@ -46,26 +46,26 @@ Pipeline recomendado:
 
 1. Receber texto bruto.
 2. Normalizar texto.
-3. Para cidades, usar UF confiavel.
+3. Para cidades, usar UF confiável.
 4. Fazer match exato por contexto + valor normalizado.
-5. Se falhar, usar chave fonetica para reduzir candidatos.
-6. Fazer ranking final por similaridade textual ou revisao.
+5. Se falhar, usar chave fonética para reduzir candidatos.
+6. Fazer ranking final por similaridade textual ou revisão.
 
-## Contrato semantico do MVP
+## Contrato semântico do MVP
 
-No MVP, a funcao deve priorizar:
+No MVP, a função deve priorizar:
 
 - previsibilidade;
 - auditabilidade;
-- regras explicitas;
+- regras explícitas;
 - baixo acoplamento;
-- comportamento estavel entre versoes suportadas do MySQL.
+- comportamento estável entre versões suportadas do MySQL.
 
-No MVP, a funcao ainda nao precisa capturar todos os fenomenos foneticos do pt-BR.
+No MVP, a função ainda não precisa capturar todos os fenômenos fonéticos do pt-BR.
 
-## Fenomenos foneticos prioritarios para evolucao
+## Fenômenos fonéticos prioritários para evolução
 
-Os proximos refinamentos devem ser avaliados com corpus e testes de regressao para cobrir, quando fizer sentido:
+Os próximos refinamentos devem ser avaliados com corpus e testes de regressão para cobrir, quando fizer sentido:
 
 - `LH`
 - `NH`
@@ -78,11 +78,11 @@ Os proximos refinamentos devem ser avaliados com corpus e testes de regressao pa
 - `SC[EI]`
 - `SC[AOU]`
 - colapso de consoantes repetidas
-- variacoes como `I/Y`, `S/Z`, `QU/K`
+- variações como `I/Y`, `S/Z`, `QU/K`
 
-## Casos-alvo de convergencia futura
+## Casos-alvo de convergência futura
 
-Os pares abaixo sao bons candidatos para convergir na mesma chave fonetica em versoes futuras, desde que os testes confirmem ganho de recall sem explosao de colisao:
+Os pares abaixo são bons candidatos para convergir na mesma chave fonética em versões futuras, desde que os testes confirmem ganho de recall sem explosão de colisão:
 
 - `Joao` / `João`
 - `Luiz` / `Luis`
@@ -90,33 +90,33 @@ Os pares abaixo sao bons candidatos para convergir na mesma chave fonetica em ve
 - `Queiroz` / `Keiroz`
 - `Xavier` / `Chavier`
 
-Esses pares devem ser tratados como corpus de evolucao, nao como promessa silenciosa do stub inicial.
+Esses pares devem ser tratados como corpus de evolução, não como promessa silenciosa do stub inicial.
 
 ## Casos que exigem cautela
 
-A funcao nao deve colapsar indiscriminadamente pares que podem representar entidades diferentes. Exemplos para observacao futura:
+A função não deve colapsar indiscriminadamente pares que podem representar entidades diferentes. Exemplos para observação futura:
 
 - `Adriana` / `Adriano`
 - `Mara` / `Maria`
 - `Bento` / `Vento`
 - `Rosa` / `Rocha`
 
-## Regra de governanca
+## Regra de governança
 
-Qualquer nova heuristica fonetica deve vir acompanhada de:
+Qualquer nova heurística fonética deve vir acompanhada de:
 
 - caso de teste positivo;
-- caso de regressao para evitar colisoes excessivas quando aplicavel;
-- atualizacao da documentacao quando a semantica mudar.
+- caso de regressão para evitar colisões excessivas quando aplicável;
+- atualização da documentação quando a semântica mudar.
 
-## Licenca e referencias externas
+## Licença e referências externas
 
-Papers e implementacoes externas servem como referencia conceitual e comparativa.
+Papers e implementações externas servem como referência conceitual e comparativa.
 
-Nao copiar codigo de projetos externos sem verificar licenca.
+Não copiar código de projetos externos sem verificar licença.
 
-Quando houver duvida:
+Quando houver dúvida:
 
-- usar o paper e implementacoes publicas como fonte de especificacao funcional;
+- usar o paper e implementações públicas como fonte de especificação funcional;
 - reimplementar as regras no estilo do projeto;
-- registrar as decisoes em testes e documentacao.
+- registrar as decisões em testes e documentação.

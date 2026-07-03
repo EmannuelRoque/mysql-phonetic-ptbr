@@ -7,7 +7,7 @@
 - `fn_br_norm_texto`
 - `fn_br_norm_cidade`
 - `fn_br_fonetica_ptbr`
-- Casos obrigatorios de regressao para cidades brasileiras.
+- Casos obrigatórios de regressão para cidades brasileiras.
 
 ## v0.2
 
@@ -32,10 +32,10 @@
 
 - `fn_br_norm_razao_social`
 
-## Direcao continua
+## Direção contínua
 
 - ampliar corpus de cidades e logradouros;
-- refinar regra de particulas;
-- evoluir chave fonetica auxiliar;
+- refinar regra de partículas;
+- evoluir chave fonética auxiliar;
 - documentar benchmark em massa;
-- adicionar exemplos de integracao com ETL e staging.
+- adicionar exemplos de integração com ETL e staging.

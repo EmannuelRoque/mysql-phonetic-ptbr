@@ -1,13 +1,13 @@
-# Referencias
+# Referências
 
-Referencias a consolidar ao longo do projeto:
+Referências a consolidar ao longo do projeto:
 
-- documentacao oficial do MySQL 5.7 e 8.0 sobre stored functions;
-- documentacao oficial do Percona Server;
-- listas oficiais de municipios brasileiros para massa de teste;
-- literatura e implementacoes estudadas apenas como referencia conceitual, sempre com verificacao de licenca antes de qualquer reaproveitamento.
+- documentação oficial do MySQL 5.7 e 8.0 sobre stored functions;
+- documentação oficial do Percona Server;
+- listas oficiais de municípios brasileiros para massa de teste;
+- literatura e implementações estudadas apenas como referência conceitual, sempre com verificação de licença antes de qualquer reaproveitamento.
 
-Referencias internas do projeto:
+Referências internas do projeto:
 
 - `docs/2026-07-02-pesquisa-algoritmos-foneticos-pt-br.md`
 - `docs/especificacao-fonetica.md`

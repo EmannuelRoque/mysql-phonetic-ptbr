@@ -2,9 +2,9 @@
 
 Diretrizes iniciais:
 
-- evitar depender de calculo em tempo de consulta para grandes volumes;
-- preferir coluna materializada preenchida por carga ou aplicacao;
+- evitar depender de cálculo em tempo de consulta para grandes volumes;
+- preferir coluna materializada preenchida por carga ou aplicação;
 - indexar `UF + cidade_norm` para match exato;
-- usar chave fonetica apenas para reduzir candidatos, nao para comparar o universo inteiro sempre.
+- usar chave fonética apenas para reduzir candidatos, não para comparar o universo inteiro sempre.
 
-O projeto deve priorizar SQL legivel e estavel no MVP. Otimizacoes devem vir acompanhadas de benchmark e validacao funcional.
+O projeto deve priorizar SQL legível e estável no MVP. Otimizações devem vir acompanhadas de benchmark e validação funcional.

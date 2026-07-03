@@ -1,29 +1,29 @@
 # mysql-phonetic-ptbr
 
-Biblioteca open source de funcoes SQL puras para MySQL e Percona Server 5.7+ com foco em normalizacao textual e geracao de chave fonetica auxiliar para portugues brasileiro.
+Biblioteca open source de funções SQL puras para MySQL e Percona Server 5.7+ com foco em normalização textual e geração de chave fonética auxiliar para português brasileiro.
 
 ## Problema
 
-Cadastros brasileiros costumam chegar com variacoes de acento, pontuacao, particulas, abreviacoes e grafias diferentes para o mesmo valor logico. Isso afeta matching de cidades, pessoas e logradouros.
+Cadastros brasileiros costumam chegar com variações de acento, pontuação, partículas, abreviações e grafias diferentes para o mesmo valor lógico. Isso afeta matching de cidades, pessoas e logradouros.
 
 Exemplos comuns:
 
-- `Sao Paulo` x `São Paulo`
-- `Santa Barbara d'Oeste` x `Santa Barbara Oeste`
+- `São Paulo` x `Sao Paulo`
+- `Santa Bárbara d'Oeste` x `Santa Bárbara Oeste`
 - `Sant'Ana do Livramento` x `Santana do Livramento` x `Sant Ana do Livramento`
 
-## Por que `SOUNDEX()` nao basta
+## Por que `SOUNDEX()` não basta
 
-`SOUNDEX()` do MySQL foi pensado para ingles e nao captura bem padroes foneticos do portugues brasileiro. Ele tambem nao resolve sozinho problemas de:
+`SOUNDEX()` do MySQL foi pensado para inglês e não captura bem padrões fonéticos do português brasileiro. Ele também não resolve sozinho problemas de:
 
 - acentos e cedilha;
-- apostrofos e pontuacao;
-- particulas como `de`, `do`, `dos`, `d'`;
-- normalizacao especifica para nomes brasileiros.
+- apóstrofos e pontuação;
+- partículas como `de`, `do`, `dos`, `d'`;
+- normalização específica para nomes brasileiros.
 
 ## Por que SQL puro em MySQL/Percona 5.7+
 
-Uma abordagem SQL pura ajuda quando o banco precisa executar a regra sem depender de plugins, UDF nativa, bibliotecas externas ou recursos exclusivos do MySQL 8. Isso facilita auditoria, instalacao e portabilidade entre:
+Uma abordagem SQL pura ajuda quando o banco precisa executar a regra sem depender de plugins, UDF nativa, bibliotecas externas ou recursos exclusivos do MySQL 8. Isso facilita auditoria, instalação e portabilidade entre:
 
 - MySQL 5.7+
 - MySQL 8+
@@ -32,47 +32,47 @@ Uma abordagem SQL pura ajuda quando o banco precisa executar a regra sem depende
 
 ## Escopo do MVP
 
-As quatro funcoes principais previstas sao:
+As quatro funções principais previstas são:
 
 - `fn_br_remove_acentos(p_txt VARCHAR(255))`
 - `fn_br_norm_texto(p_txt VARCHAR(255))`
 - `fn_br_norm_cidade(p_cidade VARCHAR(255), p_uf CHAR(2))`
 - `fn_br_fonetica_ptbr(p_txt VARCHAR(255))`
 
-A funcao fonetica deve ser tratada como chave auxiliar pragmatica para reduzir candidatos. Ela nao deve ser usada como decisao final de matching.
+A função fonética deve ser tratada como chave auxiliar pragmática para reduzir candidatos. Ela não deve ser usada como decisão final de matching.
 
-## Dependencias entre funcoes
+## Dependências entre funções
 
-As funcoes devem ser usaveis de forma independente, mas podem reutilizar funcoes-base internamente.
+As funções devem ser usáveis de forma independente, mas podem reutilizar funções-base internamente.
 
-Dependencias permitidas:
+Dependências permitidas:
 
 - `fn_br_norm_texto()` pode chamar `fn_br_remove_acentos()`.
 - `fn_br_norm_cidade()` pode chamar `fn_br_norm_texto()`.
 - `fn_br_fonetica_ptbr()` pode chamar `fn_br_norm_texto()`.
 
-Dependencia proibida:
+Dependência proibida:
 
-- `fn_br_fonetica_ptbr()` nao deve chamar `fn_br_norm_cidade()`.
+- `fn_br_fonetica_ptbr()` não deve chamar `fn_br_norm_cidade()`.
 
 Motivo:
 
-- `fn_br_norm_cidade()` contem heuristicas especificas de municipio.
-- `fn_br_fonetica_ptbr()` deve continuar generica para cidade, rua, pessoa e razao social.
+- `fn_br_norm_cidade()` contém heurísticas específicas de município.
+- `fn_br_fonetica_ptbr()` deve continuar genérica para cidade, rua, pessoa e razão social.
 
-## Regras tecnicas
+## Regras técnicas
 
 - Compatibilidade com MySQL/Percona 5.7+.
-- Nao usar `REGEXP_REPLACE`.
-- Nao usar indices funcionais como requisito.
-- Nao usar generated columns como requisito.
-- Nao usar plugins externos.
-- Nao usar UDF nativa.
-- Nao usar bibliotecas externas.
-- Nao usar recursos exclusivos do MySQL 8.
-- Declarar `DETERMINISTIC` e `NO SQL` quando aplicavel.
+- Não usar `REGEXP_REPLACE`.
+- Não usar índices funcionais como requisito.
+- Não usar generated columns como requisito.
+- Não usar plugins externos.
+- Não usar UDF nativa.
+- Não usar bibliotecas externas.
+- Não usar recursos exclusivos do MySQL 8.
+- Declarar `DETERMINISTIC` e `NO SQL` quando aplicável.
 
-## Instalacao
+## Instalação
 
 No cliente MySQL:
 
@@ -82,7 +82,7 @@ SOURCE sql/install_all.sql;
 
 ## Testes
 
-Execute os arquivos em `tests/` depois da instalacao. Exemplo:
+Execute os arquivos em `tests/` depois da instalação. Exemplo:
 
 ```sql
 SOURCE sql/install_all.sql;
@@ -94,22 +94,22 @@ SOURCE tests/05_regressao_santana_livramento.sql;
 SOURCE tests/06_test_fonetica_corpus_pesquisa.sql;
 ```
 
-Os testes atuais sao SQL simples, voltados a validacao manual e regressao inicial.
+Os testes atuais são SQL simples, voltados à validação manual e regressão inicial.
 
-Os testes de fonetica incluem tanto verificacoes do comportamento atual quanto casos marcados como `PENDENTE_EVOLUCAO`, que funcionam como corpus versionado para a evolucao da regra fonetica.
+Os testes de fonética incluem tanto verificações do comportamento atual quanto casos marcados como `PENDENTE_EVOLUCAO`, que funcionam como corpus versionado para a evolução da regra fonética.
 
 ## Pipeline recomendado
 
 1. Receber texto bruto.
 2. Normalizar texto.
-3. Para cidades, usar UF confiavel.
+3. Para cidades, usar UF confiável.
 4. Fazer match exato por UF + cidade_norm.
-5. Se falhar, usar chave fonetica como filtro de candidatos.
-6. Fazer ranking final por similaridade textual ou revisao.
+5. Se falhar, usar chave fonética como filtro de candidatos.
+6. Fazer ranking final por similaridade textual ou revisão.
 
-## Coluna materializada e indice
+## Coluna materializada e índice
 
-O projeto recomenda persistir o valor normalizado ou a chave auxiliar em coluna materializada mantida pela aplicacao ou ETL.
+O projeto recomenda persistir o valor normalizado ou a chave auxiliar em coluna materializada mantida pela aplicação ou ETL.
 
 Exemplo conceitual:
 
@@ -125,9 +125,9 @@ UPDATE dim_municipio
        cidade_fonetica = fn_br_fonetica_ptbr(fn_br_norm_cidade(nome_municipio, uf));
 ```
 
-Isso evita depender de recursos avancados do banco e costuma performar melhor em producao.
+Isso evita depender de recursos avançados do banco e costuma performar melhor em produção.
 
-## Casos obrigatorios do inicio do projeto
+## Casos obrigatórios do início do projeto
 
 - `São Paulo -> SAO PAULO`
 - `Cidade de São Paulo -> SAO PAULO`
@@ -179,4 +179,4 @@ Isso evita depender de recursos avancados do banco e costuma performar melhor em
 
 ## Estado atual
 
-Esta primeira etapa prioriza estrutura, documentacao e implementacoes iniciais simples, auditaveis e testaveis. A regra fonetica ainda e propositalmente conservadora.
+Esta primeira etapa prioriza estrutura, documentação e implementações iniciais simples, auditáveis e testáveis. A regra fonética ainda é propositalmente conservadora.
